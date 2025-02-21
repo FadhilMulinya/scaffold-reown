@@ -2,7 +2,19 @@
 
 A toolkit for building decentralized applications with **Foundry** and **Next.js**. This toolkit simplifies the setup and development process, allowing you to focus on building your application.
 
----
+## Prerequisites
+
+Before using Reown, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [npm](https://www.npmjs.com/) (v7 or higher)
+- [Foundry](https://book.getfoundry.sh/getting-started/installation)
+
+To install Foundry, run:
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
 
 ## Features
 
@@ -25,8 +37,16 @@ npm install -g reown
 ### Initialize a new project
 
 ```bash
+mkdir my-project
+cd my-project
 reown-setup
 ```
+
+This will:
+1. Create the necessary project directories
+2. Set up Foundry for smart contract development
+3. Set up Next.js with required dependencies
+4. Start the development server
 
 Option 2: Add nvm's Bin Directory to Your PATH
 Add the nvm bin directory to your shell's PATH so that globally installed packages are accessible.
