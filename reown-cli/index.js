@@ -10,21 +10,21 @@ const cwd = process.cwd();
 console.log(chalk.blue("🚀 Setting up your Blockchain project..."));
 
 async function createDirectories() {
-  console.log(chalk.green("📁 Creating project directories..."));
+  console.log(chalk.green("📁 Checking project directories..."));
   try {
-    // Create foundry directory if it doesn't exist
     if (!fs.existsSync(path.join(cwd, "foundry"))) {
-      fs.mkdirSync(path.join(cwd, "foundry"));
+      console.error(chalk.red("❌ Foundry directory not found. Please ensure you have the foundry directory."));
+      process.exit(1);
     }
     
-    // Create nextJs directory if it doesn't exist
     if (!fs.existsSync(path.join(cwd, "nextJs"))) {
-      fs.mkdirSync(path.join(cwd, "nextJs"));
+      console.error(chalk.red("❌ Next.js directory not found. Please ensure you have the nextJs directory."));
+      process.exit(1);
     }
     
-    console.log(chalk.green("✅ Directories created successfully!"));
+    console.log(chalk.green("✅ Project directories found!"));
   } catch (error) {
-    console.error(chalk.red("❌ Failed to create directories:", error.message));
+    console.error(chalk.red("❌ Error checking directories:", error.message));
     process.exit(1);
   }
 }
@@ -32,7 +32,7 @@ async function createDirectories() {
 async function setupFoundry() {
   console.log(chalk.green("🔧 Setting up Foundry..."));
   try {
-    // First check if forge is installed
+    // Check if forge is installed
     try {
       await execa("forge", ["--version"]);
     } catch (error) {
@@ -42,15 +42,14 @@ async function setupFoundry() {
       process.exit(1);
     }
 
-    // Initialize a new Forge project
-    await execa("forge", ["init"], { cwd: path.join(cwd, "foundry") });
-    
-    // Initialize git repository (forge init already does this, but let's ensure)
-    try {
+    // Initialize git in foundry directory if .git doesn't exist
+    const foundryGitPath = path.join(cwd, "foundry/.git");
+    if (!fs.existsSync(foundryGitPath)) {
       await execa("git", ["init"], { cwd: path.join(cwd, "foundry") });
-    } catch (error) {
-      // Ignore error if git repo already exists
     }
+
+    // Run forge install
+    await execa("forge", ["install"], { cwd: path.join(cwd, "foundry") });
     
     console.log(chalk.green("✅ Foundry setup complete!"));
   } catch (error) {
@@ -60,22 +59,18 @@ async function setupFoundry() {
 }
 
 async function setupNextJs() {
-  console.log(chalk.green("🔧 Setting up Next.js..."));
+  console.log(chalk.green("🔧 Checking Next.js setup..."));
   try {
-    // Check if npm is available
+    // Just check if npm is available
     try {
       await execa("npm", ["--version"]);
     } catch (error) {
       console.log(chalk.yellow("⚠️ npm not found. Please install Node.js first."));
       process.exit(1);
     }
-
-    await execa("npm", ["install", "@reown/appkit", "@reown/appkit-adapter-wagmi", "wagmi", "viem", "@tanstack/react-query"], {
-      cwd: path.join(cwd, "nextJs")
-    });
-    console.log(chalk.green("✅ Next.js setup complete!"));
+    console.log(chalk.green("✅ Next.js is ready!"));
   } catch (error) {
-    console.error(chalk.red("❌ Next.js setup failed:", error.message));
+    console.error(chalk.red("❌ Next.js check failed:", error.message));
     process.exit(1);
   }
 }
