@@ -42,11 +42,16 @@ async function setupFoundry() {
       process.exit(1);
     }
 
-    // Initialize git repository in foundry directory
-    await execa("git", ["init"], { cwd: path.join(cwd, "foundry") });
+    // Initialize a new Forge project
+    await execa("forge", ["init"], { cwd: path.join(cwd, "foundry") });
     
-    // Now run forge install
-    await execa("forge", ["install"], { cwd: path.join(cwd, "foundry") });
+    // Initialize git repository (forge init already does this, but let's ensure)
+    try {
+      await execa("git", ["init"], { cwd: path.join(cwd, "foundry") });
+    } catch (error) {
+      // Ignore error if git repo already exists
+    }
+    
     console.log(chalk.green("✅ Foundry setup complete!"));
   } catch (error) {
     console.error(chalk.red("❌ Foundry setup failed:", error.message));
