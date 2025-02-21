@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A toolkit for building decentralized applications with Foundry and Next.js",
   "author": "fadhil <mulinyafadhil@gmail.com>",
+  "bin": {
+    "reown-setup": "./reown-cli/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/FadhilMulinya/scaffold-reown.git"
@@ -26,7 +29,7 @@
     "eslint": "^8.0.0"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=16.0.0",
     "npm": ">=7.0.0"
   }
 }
