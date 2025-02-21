@@ -42,6 +42,10 @@ async function setupFoundry() {
       process.exit(1);
     }
 
+    // Initialize git repository in foundry directory
+    await execa("git", ["init"], { cwd: path.join(cwd, "foundry") });
+    
+    // Now run forge install
     await execa("forge", ["install"], { cwd: path.join(cwd, "foundry") });
     console.log(chalk.green("✅ Foundry setup complete!"));
   } catch (error) {
