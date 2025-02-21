@@ -1,0 +1,32 @@
+{
+  "name": "reown",
+  "version": "1.0.0",
+  "description": "A toolkit for building decentralized applications with Foundry and Next.js",
+  "author": "fadhil <mulinyafadhil@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FadhilMulinya/scaffold-reown.git"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "foundry",
+    "nextJs"
+  ],
+  "scripts": {
+    "setup": "node reown-cli/index.js",
+    "start": "cd nextJs && npm run dev",
+    "build": "cd nextJs && npm run build"
+  },
+  "dependencies": {
+    "execa": "^7.0.0",
+    "chalk": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  }
+}
