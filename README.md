@@ -27,6 +27,34 @@ npm install -g reown
 ```bash
 reown-setup
 ```
+
+Option 2: Add nvm's Bin Directory to Your PATH
+Add the nvm bin directory to your shell's PATH so that globally installed packages are accessible.
+
+Open your shell configuration file:
+
+For bash: ~/.bashrc or ~/.bash_profile
+
+For zsh: ~/.zshrc
+
+Add the following line to the file:
+
+bash
+Copy
+export PATH=$HOME/.nvm/versions/node/v22.13.1/bin:$PATH
+Reload the shell configuration:
+
+bash
+Copy
+source ~/.bashrc  # or source ~/.zshrc
+Verify that the reown-setup command is now available:
+
+bash
+Copy
+which reown-setup
+reown-setup
+
+
 ## Next steps
 
 - Cd into the `nextJs` directory and edit the frontend
