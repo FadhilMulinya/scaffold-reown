@@ -1,6 +1,6 @@
 # Reown Toolkit 🚀
 
-A toolkit for building decentralized applications with **Foundry** and **Next.js**. This toolkit simplifies the setup and development process, allowing you to focus on building your application.
+A toolkit for building DAPPS with **Foundry** , **Next.js** && **Reown**. This toolkit simplifies the setup and development process, allowing you to focus on building your application.
 
 ## Prerequisites
 
@@ -37,9 +37,7 @@ npm install -g reown
 ### Initialize a new project
 
 ```bash
-mkdir my-project
-cd my-project
-reown-setup
+reown
 ```
 
 This will:
