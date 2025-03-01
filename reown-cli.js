@@ -47,7 +47,7 @@ async function main() {
     }
     
     // Check for required tools
-    await checkRequiredTools();
+    const { packageManager } = await checkRequiredTools();
     
     // Clone the scaffold repository
     await cloneScaffoldRepo(projectPath);
@@ -56,7 +56,7 @@ async function main() {
     await setupFoundry(projectPath);
     
     // Set up Next.js dependencies
-    await setupNextJs(projectPath);
+    await setupNextJs(projectPath, packageManager);
     
     // Change into the project directory
     process.chdir(projectPath);
@@ -70,7 +70,7 @@ async function main() {
     console.log(chalk.blue(`\nCd into ${projectName} and run the commands below to start development`));
     console.log(chalk.white(`  cd next-js`));
     console.log(chalk.white(`  Review the .env file and update as needed`));
-    console.log(chalk.white(`  npm run dev\n`));
+    console.log(chalk.white(`  ${packageManager} run dev\n`));
     
   } catch (error) {
     console.error(chalk.red("❌ Setup failed:"), error.message);
@@ -102,16 +102,24 @@ async function checkRequiredTools() {
       process.exit(1);
     }
     
-    // Check for npm
+    // Check for package managers (npm or pnpm)
+    let packageManager = null;
     try {
-      await execa("npm", ["--version"]);
-    } catch (error) {
-      spinner.fail();
-      console.log(chalk.yellow("\n⚠️ npm not found. Please install Node.js first."));
-      process.exit(1);
+      await execa("pnpm", ["--version"]);
+      packageManager = "pnpm";
+    } catch (pnpmError) {
+      try {
+        await execa("npm", ["--version"]);
+        packageManager = "npm";
+      } catch (npmError) {
+        spinner.fail();
+        console.log(chalk.yellow("\n⚠️ Neither npm nor pnpm found. Please install Node.js first."));
+        process.exit(1);
+      }
     }
     
     spinner.succeed("All required tools are installed");
+    return { packageManager };
   } catch (error) {
     spinner.fail();
     console.error(chalk.red("\n❌ Tool check failed:"), error.message);
@@ -165,7 +173,7 @@ async function setupFoundry(projectPath) {
   }
 }
 
-async function setupNextJs(projectPath) {
+async function setupNextJs(projectPath, packageManager = 'npm') {
   const nextJsPath = path.join(projectPath, "next-js");
   const spinner = ora("Setting up Next.js environment...").start();
   
@@ -178,14 +186,26 @@ async function setupNextJs(projectPath) {
     }
     
     // Install Next.js dependencies with legacy peer deps flag
-    await execa("npm", ["install", "--legacy-peer-deps"], { cwd: nextJsPath });
-    
-    // Install additional packages including dotenv
-    await execa(
-      "npm", 
-      ["install", "@reown/appkit", "@reown/appkit-adapter-wagmi", "wagmi", "viem", "@tanstack/react-query", "dotenv", "--legacy-peer-deps"], 
-      { cwd: nextJsPath }
-    );
+    if (packageManager === 'pnpm') {
+      await execa("pnpm", ["install", "--no-frozen-lockfile"], { cwd: nextJsPath });
+      
+      // Install additional packages including dotenv
+      await execa(
+        "pnpm", 
+        ["add", "@reown/appkit", "@reown/appkit-adapter-wagmi", "wagmi", "viem", "@tanstack/react-query", "dotenv"], 
+        { cwd: nextJsPath }
+      );
+    } else {
+      // Default to npm
+      await execa("npm", ["install", "--legacy-peer-deps"], { cwd: nextJsPath });
+      
+      // Install additional packages including dotenv
+      await execa(
+        "npm", 
+        ["install", "@reown/appkit", "@reown/appkit-adapter-wagmi", "wagmi", "viem", "@tanstack/react-query", "dotenv", "--legacy-peer-deps"], 
+        { cwd: nextJsPath }
+      );
+    }
     
     // Copy environment file
     if (existsSync(path.join(nextJsPath, ".env.example"))) {
@@ -195,7 +215,7 @@ async function setupNextJs(projectPath) {
       spinner.text = "No .env.example file found, skipping environment setup";
     }
     
-    spinner.succeed("Next.js setup complete");
+    spinner.succeed(`Next.js setup complete using ${packageManager}`);
   } catch (error) {
     spinner.fail();
     console.error(chalk.red("\n❌ Next.js setup failed:"), error.message);

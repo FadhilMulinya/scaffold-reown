@@ -13,7 +13,8 @@
       "url": "git@github.com:FadhilMulinya/scaffold-reown.git"
   },
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "test:package-managers": "node test-package-managers.js"
   },
   "keywords": [
       "blockchain",
@@ -33,6 +34,7 @@
   },
   "engines": {
       "node": ">=16.0.0",
-      "npm": ">=7.0.0"
-    }
+      "npm": ">=7.0.0",
+      "pnpm": ">=6.0.0"
+  }
 }
