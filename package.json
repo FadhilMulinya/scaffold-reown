@@ -1,38 +1,42 @@
 {
-  "name": "reown",
-  "version": "1.1.4",
-  "description": "CLI tool to set up a  blockchain project with Foundry and Next.js and Reown",
-  "type": "module",
-  "author": "fadhil <mulinyafadhil@gmail.com>",
-  "bin": {
-      "reown": "./reown-cli.js"
-  },
-  "main": "reown-cli.js",
-  "repository": {
-      "type": "git",
-      "url": "git@github.com:FadhilMulinya/scaffold-reown.git"
-  },
-  "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-      "blockchain",
-      "foundry",
-      "nextjs",
-      "ethereum",
-      "web3",
-      "cli",
-      "reown"
-  ],
-  "license": "MIT",
-  "dependencies": {
-      "chalk": "^5.3.0",
-      "execa": "^8.0.1",
-      "inquirer": "^9.2.13",
-      "ora": "^8.0.1"
-  },
-  "engines": {
-      "node": ">=16.0.0",
-      "npm": ">=7.0.0"
+    "name": "reown",
+    "version": "1.1.4",
+    "description": "CLI tool to set up a  blockchain project with Foundry and Next.js and Reown",
+    "type": "module",
+    "author": "fadhil <mulinyafadhil@gmail.com>",
+    "bin": {
+        "reown": "./reown-cli.js"
+    },
+    "main": "reown-cli.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:FadhilMulinya/scaffold-reown.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "test:package-managers": "node test-package-managers.js"
+    },
+    "keywords": [
+        "blockchain",
+        "foundry",
+        "nextjs",
+        "ethereum",
+        "web3",
+        "cli",
+        "reown"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "chalk": "^5.3.0",
+        "execa": "^8.0.1",
+        "inquirer": "^9.2.13",
+        "ora": "^8.0.1"
+       
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=7.0.0",
+        "pnpm": ">=6.0.0",
+        "yarn": ">=1.22.0"
     }
 }

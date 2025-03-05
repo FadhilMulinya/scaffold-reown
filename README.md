@@ -7,7 +7,7 @@ A toolkit for building DAPPS with **Foundry** , **Next.js** && **Reown**. This t
 Before using Reown, make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/) (v16 or higher)
-- [npm](https://www.npmjs.com/) (v7 or higher)
+- [npm](https://www.npmjs.com/) (v7 or higher) or [pnpm](https://pnpm.io/) (v6 or higher)
 - [Foundry](https://book.getfoundry.sh/getting-started/installation)
 
 To install Foundry, run:
@@ -21,15 +21,23 @@ foundryup
 - **Foundry Integration**: Easily set up and manage smart contracts with Foundry.
 - **Next.js Frontend**: Quickly scaffold a modern Next.js frontend.
 - **CLI Tool**: Automate project setup with the `reown-setup` command.
+- **Package Manager Support**: Works with both npm and pnpm.
 
 ---
 
 ## Installation
 
-To install the Reown Toolkit globally, run:
+Install globally with your preferred package manager:
 
 ```bash
+# Using npm
 npm install -g reown
+
+# Using yarn
+yarn global add reown
+
+# Using pnpm
+pnpm add -g reown
 ```
 
 ## Usage
@@ -46,6 +54,8 @@ This will:
 3. Set up Next.js with required dependencies
 4. Start the development server
 
+The CLI will automatically detect whether you're using npm or pnpm and use the appropriate commands.
+
 Option 2: Add nvm's Bin Directory to Your PATH
 Add the nvm bin directory to your shell's PATH so that globally installed packages are accessible.
 
@@ -57,20 +67,16 @@ For zsh: ~/.zshrc
 
 Add the following line to the file:
 
-bash
-Copy
-export PATH=$HOME/.nvm/versions/node/v22.13.1/bin:$PATH
+```export PATH=$HOME/.nvm/versions/node/v22.13.1/bin:$PATH```
 Reload the shell configuration:
 
-bash
-Copy
-source ~/.bashrc  # or source ~/.zshrc
+```source ~/.bashrc  # or source ~/.zshrc```
 Verify that the reown-setup command is now available:
 
-bash
-Copy
-which reown-setup
-reown-setup
+
+```which reown-setup```
+
+```reown-setup```
 
 
 ## Next steps
